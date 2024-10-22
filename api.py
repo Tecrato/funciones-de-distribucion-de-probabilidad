@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi.responses import RedirectResponse
 from fastapi.responses import HTMLResponse
 
+
 from funciones_de_distribucion import (
     func_distribucion_binomial,
     func_distribucion_normal,
@@ -48,7 +49,7 @@ def api_hypergeometrica(input: hypergeometrica_input) -> JSONResponse:
 
 @app.get("/api/poisson")
 def api_poisson(input: poisson_input) -> JSONResponse:
-    return JSONResponse(content=func_distribucion_poisson(input.x, input.lam))
+    return JSONResponse(content={"result":func_distribucion_poisson(input.x, input.lam)})
 
 @app.exception_handler(404)
 async def custom_404_handler(_, __) -> HTMLResponse:
@@ -61,6 +62,7 @@ async def custom_405_handler(_, __) -> HTMLResponse:
 @app.exception_handler(500)
 async def custom_500_handler(_, __) -> HTMLResponse:
     return HTMLResponse(content="<h1>500 Internal Server Error</h1>", status_code=500)
+
 
 if __name__ == "__main__":
     import uvicorn
